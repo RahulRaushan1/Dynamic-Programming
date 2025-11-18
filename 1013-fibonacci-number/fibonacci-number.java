@@ -1,14 +1,26 @@
-class Solution {
-    public int[] dp;
-    public int fibo(int n) {
+// class Solution {
+//     public int[] dp;
+//     public int fibo(int n) {
+//         if(n<=1) return n;
+//         if(dp[n]!=0) return dp[n]; // new
+//         int ans = fibo(n-1) + fibo(n-2);
+//         dp[n] = ans; // new
+//         return ans;
+//     }
+//     public int fib(int n){
+//         dp = new int[n+1];  // index from 0 to n
+//         return fibo(n);
+//     }
+// }
+
+class Solution { 
+    public int fibo(int n, int[] dp) {
         if(n<=1) return n;
-        if(dp[n]!=0) return dp[n]; // new
-        int ans = fibo(n-1) + fibo(n-2);
-        dp[n] = ans; // new
-        return ans;
+        if(dp[n]!=0) return dp[n];
+        return dp[n] = fibo(n-1,dp) + fibo(n-2,dp);
     }
-    public int fib(int n){
-        dp = new int[n+1];  // index from 0 to n
-        return fibo(n);
+    public int fib(int n) {
+        int[] dp = new int[n+1];  // indox from 0 to n 
+        return fibo(n,dp);
     }
 }
