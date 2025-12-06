@@ -61,21 +61,40 @@
 
 //               Method -----> 3
 
+// class Solution {
+//     public int longestCommonSubsequence(String a,String b){
+//         int m= a.length(), n = b.length();
+//         // i = m-1 to 0 | j = n-1 to 0
+//         int [][] dp = new int [m][n];
+//         for(int i=0;i<dp.length;i++){
+//           for(int j=0;j<dp[0].length;j++) {
+//            int p = (i>=1 && j>=1) ? dp[i-1][j-1] : 0;
+//            int q = (j>=1) ? dp[i][j-1] : 0;
+//            int r = (i>=1) ? dp[i-1][j] : 0;
+//             if(a.charAt(i)==b.charAt(j))  dp[i][j] = 1 + p;
+//             else  dp[i][j] = Math.max(q,r); 
+//         }
+//              }
+//         return dp[m-1][n-1];
+//     }
+
+// }       
+
 class Solution {
     public int longestCommonSubsequence(String a,String b){
         int m= a.length(), n = b.length();
-        // i = m-1 to 0 | j = n-1 to 0
-        int [][] dp = new int [m][n];
-        for(int i=0;i<dp.length;i++){
-          for(int j=0;j<dp[0].length;j++) {
-           int p = (i>=1 && j>=1) ? dp[i-1][j-1] : 0;
-           int q = (j>=1) ? dp[i][j-1] : 0;
-           int r = (i>=1) ? dp[i-1][j] : 0;
-            if(a.charAt(i)==b.charAt(j))  dp[i][j] = 1 + p;
-            else  dp[i][j] = Math.max(q,r); 
+        int [][] dp = new int [2][n+1];
+        for(int i=1;i<=m;i++){
+          for(int j=1;j<=n;j++) {
+            if(a.charAt(i-1)==b.charAt(j-1))  dp[1][j] = 1 + dp[0][j-1];
+            else  dp[1][j] = Math.max(dp[1][j-1],dp[0][j]); 
         }
+        // copy the 1st row to 0th row for next time
+        for(int j=0;j<=n;j++) dp[0][j] = dp [1][j];
              }
-        return dp[m-1][n-1];
+        return dp[1][n];
     }
 
-}                     
+}       
+
+
