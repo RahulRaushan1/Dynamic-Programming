@@ -39,25 +39,52 @@
 // static hatane ke liye
 // int pass by value hote h , isliye class banana parega ya array ka ek element banake pass by reference kar sakte ho.
 
-class Solution{
+// class Solution{
    
-   public class Int{
-    int val;
-    Int(int val){
-        this.val = val;
-    }
-   }
-    public int levels(TreeNode root, Int dia){
+//    public class Int{
+//     int val;
+//     Int(int val){
+//         this.val = val;
+//     }
+//    }
+//     public int levels(TreeNode root, Int dia){
+//         if(root==null) return 0;
+//         int leftLevels = levels(root.left,dia);
+//         int rightLevels = levels(root.right,dia);
+//         int path = leftLevels + rightLevels; // extra
+//         dia.val= Math.max(dia.val,path); // extra
+//         return 1 + Math.max(leftLevels,rightLevels);
+//     }
+//     public int diameterOfBinaryTree(TreeNode root){
+//         Int dia = new Int(0);
+//         levels(root,dia);
+//         return dia.val;
+//     }
+// }
+
+
+// Method --------> 3  with memoization
+
+class Solution {
+    static Map<TreeNode, Integer> dp;
+    public int levels(TreeNode root){
         if(root==null) return 0;
-        int leftLevels = levels(root.left,dia);
-        int rightLevels = levels(root.right,dia);
-        int path = leftLevels + rightLevels; // extra
-        dia.val= Math.max(dia.val,path); // extra
-        return 1 + Math.max(leftLevels,rightLevels);
+        if(dp.containsKey(root)) return dp.get(root);
+        int leftLevels = levels(root.left);
+        int rightLevels = levels(root.right);
+        dp.put(root, 1 + Math.max(leftLevels,rightLevels));
+        return  dp.get(root);
+    }
+    public int diameter(TreeNode root){
+       if(root==null) return 0;
+       int myDia = levels(root.left) + levels(root.right);
+       int leftDia = diameter(root.left);
+       int rightDia = diameter(root.right);
+       return Math.max(myDia,Math.max(leftDia,rightDia));
     }
     public int diameterOfBinaryTree(TreeNode root){
-        Int dia = new Int(0);
-        levels(root,dia);
-        return dia.val;
+        dp = new HashMap<>();
+        return diameter(root);
     }
 }
+
