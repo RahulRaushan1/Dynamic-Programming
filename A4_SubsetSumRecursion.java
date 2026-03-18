@@ -2,7 +2,7 @@ package A22_DynamicProgramming;
 
 public class A4_SubsetSumRecursion {
     public static void main(String[] args) {
-        int[] arr = {8,-1,2,4};
+        int[] arr = {8,1,2,4};
         int target =7;
         System.out.println(subset(0,0,arr,target));
     }
